@@ -284,6 +284,10 @@ module SmartListing
               :html_options => action,
             )
             template = 'action_custom'
+	  else
+            locals.merge!(
+	      :action => action,
+	    )
           end
 
           locals[:icon] = [locals[:icon], smart_listing_config.classes(:muted)] if !locals[:action_if]
@@ -291,7 +295,7 @@ module SmartListing
           if template
             concat(render(:partial => "smart_listing/#{template}", :locals => locals))
           else
-            concat(render(:partial => "smart_listing/action_#{action_name}", :locals => {:action => action}))
+            concat(render(:partial => "smart_listing/action_#{action_name}", :locals => locals))
           end
         end
       end
